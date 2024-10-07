@@ -45,7 +45,26 @@ export const signup = async (req, res) => {
     },
   });
 };
+export const verifyEmail = async (req, res) => {
+  const { verificationToken } = req.body;
+  try {
+    const user = await User.findOne({
+      verificationToken: verificationToken,
+      verficationTokenExpiresAt: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired verification code",
+      });
+    }
+    user.isVerified = true;
+    user.verificationToken = null;
+    user.verficationTokenExpiresAt = null;
+    await user.save();
+    res.status(200).json({ message: "Email verified successfully." });
+  } catch (error) {}
+};
 export const login = async (req, res) => {};
-
 export const forgetPass = async (req, res) => {};
 export const logout = async (req, res) => {};
