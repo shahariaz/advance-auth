@@ -3,7 +3,7 @@ import {
   login,
   logout,
   forgetPass,
-  singup,
+  signup,
 } from "../controllers/authController.js";
 const route = express.Router();
 
@@ -13,6 +13,6 @@ route.post("/logout", logout);
 
 route.post("/forget-password", forgetPass);
 
-route.post("/signup", singup);
+route.post("/signup", signup);
 
 export default route;
