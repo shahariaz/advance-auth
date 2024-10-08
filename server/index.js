@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 dotenv.config();
 import { connectDB } from "./db/connectDB.js";
@@ -11,6 +12,7 @@ app.get("/", (req, res) => {
 
 //middleware
 app.use(express.json());
+app.use(cookieParser());
 //router
 
 app.use("/api/auth", authRouter);

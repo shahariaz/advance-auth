@@ -148,3 +148,17 @@ export const resetPass = async (req, res) => {
     res.status(200).json({ message: "Password reset successfully." });
   } catch (error) {}
 };
+export const checkAuth = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) {
+      return res.status(401).json({ message: "User not found." });
+    }
+    res.status(200).json({
+      ...user._doc,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
